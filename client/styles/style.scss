@@ -1,0 +1,52 @@
+#player1 {
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 70%;
+  left: 15%;
+  position: fixed;
+  .player-title {
+    position: absolute;
+    top: -50px;
+  }
+}
+#player3 {
+  top: 0;
+  display: flex;
+  width: 70%;
+  left: 15%;
+  flex-direction: row;
+  justify-content: center;
+  position: fixed;
+  .player-title {
+    position: absolute;
+    bottom: -50px;
+  }
+}
+#player2 {
+  left: 0;
+  display: flex;
+  width: 15%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  .player-title {
+    position: absolute;
+    right: -200px;
+  }
+}
+#player4 {
+  right: 0;
+  display: flex;
+  width: 15%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  .player-title {
+    position: absolute;
+    left: -200px;
+  }
+}

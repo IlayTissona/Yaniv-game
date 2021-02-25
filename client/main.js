@@ -10,7 +10,9 @@ deck.shuffle();
 
 deal([player1, player2, player3, player4], deck);
 
-console.log([player1, player2, player3, player4], deck);
+window.addEventListener("DOMContentLoaded", () => {
+  printGameState([player1, player2, player3, player4]), deck;
+});
 
 function deal(players, deck) {
   for (let player of players) {
@@ -26,7 +28,7 @@ function printGameState(players, tableDeck) {
       `player${players.indexOf(player) + 1}`
     );
     let playerTitle = document.createElement("h2");
-    playerTitle.className = playerTitle;
+    playerTitle.className = "player-title";
     playerTitle.innerText = player.name;
     playerDiv.append(playerTitle);
     printPlayer(player, playerDiv);

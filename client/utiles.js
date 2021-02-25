@@ -70,3 +70,5 @@ class Deck extends Array {
     }
   }
 }
+
+// module.exports = { Player, Card, Deck };

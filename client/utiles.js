@@ -82,6 +82,7 @@ function deal(players, deck) {
 
 function printGameState(players, tableDeck) {
   for (let player of players) {
+    console.log(player);
     let playerDiv = document.getElementById(
       `player${players.indexOf(player) + 1}`
     );
@@ -91,6 +92,10 @@ function printGameState(players, tableDeck) {
     playerDiv.append(playerTitle);
     printPlayer(player, playerDiv);
   }
+  let deckDiv = document.createElement("div");
+  deckDiv.classList.add("table-deck");
+  deckDiv.innerText = tableDeck.length;
+  document.body.append(deckDiv);
 }
 
 function printPlayer(player, playerDiv) {

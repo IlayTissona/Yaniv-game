@@ -5,11 +5,25 @@ class Card {
   }
 }
 
-class player {
-  constructor(name, deck) {
+class Player {
+  constructor(name) {
     this.name = name;
-    this.deck = deck;
+    this.deck = [];
     this.points = 0;
+  }
+
+  calcHandPoints() {
+    let points = 0;
+    for (let card of this.deck) {
+      if (card.number === "joker") {
+        points += 0;
+      } else if (card.number <= 10) {
+        points += card.number;
+      } else {
+        points += 10;
+      }
+    }
+    return points;
   }
 }
 

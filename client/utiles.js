@@ -1,7 +1,7 @@
 class Card {
-  constructor(type, number) {
-    this.type = type;
-    this.number = number;
+  constructor(suit, value) {
+    this.suit = suit;
+    this.value = value;
   }
 }
 
@@ -15,10 +15,10 @@ class Player {
   calcHandPoints() {
     let points = 0;
     for (let card of this.deck) {
-      if (card.number === "joker") {
+      if (card.value === "joker") {
         points += 0;
-      } else if (card.number <= 10) {
-        points += card.number;
+      } else if (card.value <= 10) {
+        points += card.value;
       } else {
         points += 10;
       }
@@ -35,23 +35,23 @@ class Deck extends Array {
         let card = new Card(null, i + 1);
         switch (j) {
           case 0:
-            card.type = "hearts";
+            card.suit = "hearts";
             break;
           case 1:
-            card.type = "diamonds";
+            card.suit = "diamonds";
             break;
           case 2:
-            card.type = "spades";
+            card.suit = "spades";
             break;
           case 3:
-            card.type = "clubs";
+            card.suit = "clubs";
             break;
         }
         this.push(card);
       }
     }
-    this.push(new Card("red", "joker"));
-    this.push(new Card("black", "joker"));
+    this.push(new Card("red", "Joker"));
+    this.push(new Card("black", "Joker"));
   }
   shuffle() {
     let exists = [];

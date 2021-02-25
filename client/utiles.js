@@ -10,14 +10,14 @@ class Player {
     this.name = name;
     this.index = "player" + index;
     this.deck = [];
-    this.points = 0;
     this.score = 0;
+    // this.#ilay = "test";
   }
 
   calcHandPoints() {
     let points = 0;
     for (let card of this.deck) {
-      if (card.value === "joker") {
+      if (card.value === "Joker") {
         points += 0;
       } else if (card.value <= 10) {
         points += card.value;
@@ -27,6 +27,7 @@ class Player {
     }
     return points;
   }
+
   drawCard(tableDeck) {
     this.deck.push(tableDeck.pop());
   }
@@ -86,8 +87,8 @@ function deal(players, deck) {
 
 function printGameState(players, tableDeck) {
   for (let player of players) {
-    console.log(player);
     let playerDiv = document.getElementById(`player${players.indexOf(player)}`);
+    playerDiv.innerHTML = "";
     let playerTitle = document.createElement("h2");
     playerTitle.className = "player-title";
     playerTitle.innerText = player.name;
@@ -139,5 +140,3 @@ function cardColorClass(card) {
   }
   return `card-red`;
 }
-
-// module.exports = { Player, Card, Deck };

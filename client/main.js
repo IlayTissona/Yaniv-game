@@ -19,41 +19,52 @@ function newRound(
   let turn = starter;
   deck.shuffle();
   deal(players, deck);
-  let tableDeck = deck.pop();
+  let tableDeck = [];
+  tableDeck.push(deck.pop());
 
-  //   do {
   printGameState(players, deck);
   console.log("loop");
-  setTimeout(() => {
-    ended = playTurn(players[turn], deck, tableDeck);
-    turn = turn === 3 ? 0 : turn + 1;
-  }, 20000);
-  //   } while (!ended);
+  playTurn(players, turn, deck, tableDeck);
+  //   turn = turn === 3 ? 0 : turn + 1;
 }
 
-function playTurn(player, deck, tableDeck) {
+function playTurn(players, turn, deck, tableDeck) {
+  const player = players[turn];
   const playerDiv = document.getElementById(player.index);
-  let yanived = false;
-  if (player.calcHandPoints() < 7) {
+  console.log(tableDeck);
+  if (player.calcHandPoints() <= 7) {
     let yanivButton = document.createElement("button");
-    yanivButton.value = "Yaniv!";
+    playerDiv.append(yanivButton);
+    yanivButton.innerText = "Yaniv!";
     yanivButton.addEventListener("click", () => {
       yanived = true;
     });
   }
   playerDiv.addEventListener("click", function placeCard(event) {
+    if (event.target.className === "player-current-hand") {
+      return;
+    }
     const cardDiv = event.target;
+    console.log(cardDiv.whichCard);
     let cardToPlace;
     for (let card of player.deck) {
-      if ((cardDiv.whichCard = `${card.value} ${card.suit}`)) {
+      if (cardDiv.whichCard === `${card.value} ${card.suit}`) {
         cardToPlace = card;
+        console.log(cardDiv.whichCard);
+        console.log(`${card.value} ${card.suit}`);
+        console.log(cardToPlace);
+        console.log(player.deck.indexOf(cardToPlace));
         player.deck.splice(player.deck.indexOf(cardToPlace), 1);
       }
     }
-    cardDiv.hidden = true;
+    // cardDiv.hidden = true;
+    printGameState(players, deck);
     tableDeck.push(cardToPlace);
+    turn = turn === 3 ? 0 : turn + 1;
+    playerDiv.removeEventListener("click", placeCard);
+    playTurn(players, turn, deck, tableDeck);
   });
-  return yanived;
+  //   return yanived;
 }
 
 window.addEventListener("DOMContentLoaded", newGame);

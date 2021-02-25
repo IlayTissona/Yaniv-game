@@ -1,4 +1,4 @@
-#player1 {
+#player0 {
   bottom: 0;
   display: flex;
   flex-direction: row;
@@ -11,7 +11,7 @@
     top: -50px;
   }
 }
-#player3 {
+#player2 {
   top: 0;
   display: flex;
   width: 70%;
@@ -24,7 +24,7 @@
     bottom: -50px;
   }
 }
-#player2 {
+#player1 {
   left: 0;
   display: flex;
   width: 15%;
@@ -37,7 +37,7 @@
     right: -200px;
   }
 }
-#player4 {
+#player3 {
   right: 0;
   display: flex;
   width: 15%;

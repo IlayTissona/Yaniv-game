@@ -1,4 +1,4 @@
-#player1 {
+#player0 {
   bottom: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -15,12 +15,12 @@
   position: fixed;
 }
 
-#player1 .player-title {
+#player0 .player-title {
   position: absolute;
   top: -50px;
 }
 
-#player3 {
+#player2 {
   top: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -37,12 +37,12 @@
   position: fixed;
 }
 
-#player3 .player-title {
+#player2 .player-title {
   position: absolute;
   bottom: -50px;
 }
 
-#player2 {
+#player1 {
   left: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -59,12 +59,12 @@
   position: fixed;
 }
 
-#player2 .player-title {
+#player1 .player-title {
   position: absolute;
   right: -200px;
 }
 
-#player4 {
+#player3 {
   right: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -81,7 +81,7 @@
   position: fixed;
 }
 
-#player4 .player-title {
+#player3 .player-title {
   position: absolute;
   left: -200px;
 }

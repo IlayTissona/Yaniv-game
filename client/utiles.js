@@ -6,8 +6,9 @@ class Card {
 }
 
 class Player {
-  constructor(name) {
+  constructor(name, index) {
     this.name = name;
+    this.index = "player" + index;
     this.deck = [];
     this.points = 0;
     this.score = 0;
@@ -25,6 +26,9 @@ class Player {
       }
     }
     return points;
+  }
+  drawCard(tableDeck) {
+    this.deck.push(tableDeck.pop());
   }
 }
 
@@ -83,9 +87,7 @@ function deal(players, deck) {
 function printGameState(players, tableDeck) {
   for (let player of players) {
     console.log(player);
-    let playerDiv = document.getElementById(
-      `player${players.indexOf(player) + 1}`
-    );
+    let playerDiv = document.getElementById(`player${players.indexOf(player)}`);
     let playerTitle = document.createElement("h2");
     playerTitle.className = "player-title";
     playerTitle.innerText = player.name;
@@ -111,6 +113,7 @@ function printPlayer(player, playerDiv) {
 function printCard(card) {
   let cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
+  cardDiv.whichCard = `${card.value} ${card.suit}`;
   let cardValue = card.value;
   if (card.value === 1) cardValue = "Ace";
   if (card.value === 11) cardValue = "Jack";

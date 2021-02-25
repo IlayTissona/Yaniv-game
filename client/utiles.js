@@ -39,4 +39,20 @@ class Deck extends Array {
     this.push(new Card("red", "joker"));
     this.push(new Card("black", "joker"));
   }
+  shuffle() {
+    let exists = [];
+    let shuffled = [];
+    for (let i = 0; i < this.length; i++) {
+      let rand;
+      do {
+        rand = Math.floor(Math.random() * this.length);
+      } while (exists[rand]);
+      exists[rand] = true;
+      shuffled.push(this[rand]);
+    }
+    for (let i = 0; i < shuffled.length; i++) {
+      this.shift();
+      this.push(shuffled[i]);
+    }
+  }
 }

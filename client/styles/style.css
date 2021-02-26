@@ -1,3 +1,7 @@
+body {
+  background-color: green;
+}
+
 #player0 {
   bottom: 0;
   display: -webkit-box;
@@ -10,14 +14,20 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 70%;
-  left: 15%;
+  width: 70vw;
+  height: 15vh;
+  right: 15vw;
   position: fixed;
 }
 
 #player0 .player-title {
   position: absolute;
-  top: -50px;
+  top: -80px;
+}
+
+#player0 .player-current-hand {
+  position: absolute;
+  top: -30px;
 }
 
 #player2 {
@@ -25,8 +35,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 70%;
-  left: 15%;
+  width: 70vw;
+  height: 15vh;
+  left: 15vw;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -39,7 +50,12 @@
 
 #player2 .player-title {
   position: absolute;
-  bottom: -50px;
+  bottom: -100px;
+}
+
+#player2 .player-current-hand {
+  position: absolute;
+  bottom: -60px;
 }
 
 #player1 {
@@ -47,8 +63,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 15%;
-  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -56,21 +70,35 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  width: 15vw;
+  height: 100vh;
   position: fixed;
+}
+
+#player1 .card {
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+  width: 15vh;
 }
 
 #player1 .player-title {
   position: absolute;
-  right: -200px;
+  right: -80px;
+}
+
+#player1 .player-current-hand {
+  position: absolute;
+  right: -10px;
 }
 
 #player3 {
+  position: fixed;
+  height: 100vh;
+  width: 15vw;
   right: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 15%;
-  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -78,32 +106,56 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  position: fixed;
 }
 
 #player3 .player-title {
   position: absolute;
-  left: -200px;
+  left: -80px;
+}
+
+#player3 .card {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+#player3 .player-current-hand {
+  position: absolute;
+  left: -30px;
 }
 
 #table-deck {
+  background-image: url("./cards-svg/Card_back.svg");
+  background-size: contain;
+  height: 150px;
+  width: 100px;
   position: fixed;
-  top: 40%;
-  left: 40%;
+  top: 35vh;
+  left: 30vw;
 }
 
 #table-pile {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 35vh;
+  left: 40vw;
+  width: 30vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #table {
   position: fixed;
-  height: 40%;
-  width: 40%;
-  top: 30%;
-  left: 30%;
-  background-color: green;
+  height: 50vh;
+  width: 50vw;
+  top: 25vh;
+  left: 25vw;
+  background-color: limegreen;
 }
 /*# sourceMappingURL=style.css.map */

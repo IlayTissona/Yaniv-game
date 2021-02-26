@@ -11,7 +11,6 @@ class Player {
     this.index = "player" + index;
     this.deck = [];
     this.score = 0;
-    // this.#ilay = "test";
   }
 
   calcHandPoints() {
@@ -85,7 +84,7 @@ function deal(players, deck) {
   }
 }
 
-function printGameState(players, tableDeck) {
+function printGameState(players, tableDeck, tablePile) {
   for (let player of players) {
     let playerDiv = document.getElementById(`player${players.indexOf(player)}`);
     playerDiv.innerHTML = "";
@@ -95,10 +94,16 @@ function printGameState(players, tableDeck) {
     playerDiv.append(playerTitle);
     printPlayer(player, playerDiv);
   }
-  let deckDiv = document.createElement("div");
-  deckDiv.classList.add("table-deck");
+
+  let tablePileDiv = document.getElementById("table-pile");
+  tablePileDiv.innerText = "";
+
+  for (let card of tablePile) {
+    tablePileDiv.append(printCard(card));
+    // debugger;
+  }
+  let deckDiv = document.getElementById("table-deck");
   deckDiv.innerText = tableDeck.length;
-  document.body.append(deckDiv);
 }
 
 function printPlayer(player, playerDiv) {

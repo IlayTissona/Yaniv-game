@@ -51,8 +51,21 @@
   }
 }
 
-.table-deck {
+#table-deck {
   position: fixed;
   top: 40%;
   left: 40%;
+}
+#table-pile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+#table {
+  position: fixed;
+  height: 40%;
+  width: 40%;
+  top: 30%;
+  left: 30%;
+  background-color: green;
 }

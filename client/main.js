@@ -6,15 +6,10 @@ function newGame() {
     new Player("yair", 3),
   ];
 
-  newRound(players, 0);
+  newRound(players);
 }
 
-function newRound(
-  players,
-  roundNum = 0,
-  starter = Math.floor(Math.random() * 4)
-) {
-  let ended = false;
+function newRound(players, starter = Math.floor(Math.random() * 4)) {
   let deck = new Deck();
   let turn = starter;
   deck.shuffle();
@@ -36,7 +31,7 @@ function playTurn(players, turn, deck, tablePile) {
     playerDiv.append(yanivButton);
     yanivButton.innerText = "Yaniv!";
     yanivButton.addEventListener("click", () => {
-      yanived = true;
+      roundEnd(players, turn, deck, tablePile);
     });
   }
   let tableEventNotAdded = true;
@@ -64,7 +59,6 @@ function playTurn(players, turn, deck, tablePile) {
     if (tableEventNotAdded) {
       tableDiv.addEventListener("click", function drawCardPick(event) {
         let deckToDrawFrom;
-        console.log(event.target);
         if (event.target.id === "table-deck") {
           deckToDrawFrom = deck;
         } else if (event.target.parentNode.id === "table-pile") {
@@ -73,18 +67,20 @@ function playTurn(players, turn, deck, tablePile) {
         player.drawCard(deckToDrawFrom);
         printGameState(players, deck, cardsToPlace);
         tablePile.push(...cardsToPlace);
-        console.log(tablePile);
-        console.log(cardsToPlace);
         turn = turn === 3 ? 0 : turn + 1;
         playerDiv.removeEventListener("click", placeCard);
         tableDiv.removeEventListener("click", drawCardPick);
         playerDiv.style.color = "black";
+        if (deck.length === 1) {
+          deck.push(...tablePile);
+          tablePile.push(deck.pop);
+          deck.shuffle();
+        }
         playTurn(players, turn, deck, tablePile);
       });
       tableEventNotAdded = false;
     }
   });
-  //   return yanived;
 }
 
 window.addEventListener("DOMContentLoaded", newGame);

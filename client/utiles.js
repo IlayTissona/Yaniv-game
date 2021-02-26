@@ -27,11 +27,17 @@ class Player {
     return points;
   }
 
-  drawCard(tableDeck) {
-    this.deck.push(tableDeck.pop());
+  drawCard(tableDeck, last = false) {
+    if (last) {
+      let tablePileDiv = document.getElementById("table-pile");
+      let cardsInPile = tablePileDiv.childNodes.length;
+      this.deck.push(tableDeck[tableDeck.length - cardsInPile]);
+      tableDeck.splice(tableDeck.length - cardsInPile, 1);
+    } else {
+      this.deck.push(tableDeck.pop());
+    }
   }
 }
-
 class Deck extends Array {
   constructor() {
     super();
@@ -78,6 +84,7 @@ class Deck extends Array {
 
 function deal(players, deck) {
   for (let player of players) {
+    player.deck = [];
     for (let i = 0; i < 5; i++) {
       player.deck.push(deck.pop());
     }
@@ -86,7 +93,7 @@ function deal(players, deck) {
 
 function printGameState(players, tableDeck, tablePile) {
   for (let player of players) {
-    let playerDiv = document.getElementById(`player${players.indexOf(player)}`);
+    let playerDiv = document.getElementById(player.index);
     playerDiv.innerHTML = "";
     let playerTitle = document.createElement("h2");
     playerTitle.className = "player-title";
@@ -100,7 +107,6 @@ function printGameState(players, tableDeck, tablePile) {
 
   for (let card of tablePile) {
     tablePileDiv.append(printCard(card));
-    // debugger;
   }
   let deckDiv = document.getElementById("table-deck");
   deckDiv.innerText = tableDeck.length;
@@ -121,17 +127,22 @@ function printCard(card) {
   cardDiv.classList.add("card");
   cardDiv.whichCard = `${card.value} ${card.suit}`;
   let cardValue = card.value;
-  if (card.value === 1) cardValue = "Ace";
-  if (card.value === 11) cardValue = "Jack";
-  if (card.value === 12) cardValue = "Queen";
-  if (card.value === 13) cardValue = "King";
-  let cardValueDiv = document.createElement("div");
-  let cardSuitDiv = document.createElement("div");
-  cardValueDiv.classList.add("card-value");
-  cardSuitDiv.classList.add("card-suit");
-  cardDiv.classList.add(cardColorClass(card));
+  if (card.value === 1) cardValue = "A";
+  if (card.value === 11) cardValue = "J";
+  if (card.value === 12) cardValue = "Q";
+  if (card.value === 13) cardValue = "K";
+  let imgPath;
+  if (card.value === "Joker") {
+    imgPath = `./styles/cards-svg/Joker${card.suit}.svg`;
+  } else {
+    imgPath = `./styles/cards-svg/${cardValue}${card.suit[0].toUpperCase()}.svg`;
+  }
+  let imgElem = document.createElement("img");
+  imgElem.src = imgPath;
+  imgElem.style.height = "150px";
+  imgElem.style.width = "100px";
 
-  cardDiv.innerText = `${cardValue} of ${card.suit}`;
+  cardDiv.append(imgElem);
 
   return cardDiv;
 }
@@ -144,4 +155,31 @@ function cardColorClass(card) {
     return `card-black`;
   }
   return `card-red`;
+}
+
+function isLegalCard(card, drawn) {
+  if (drawn.length === 0) {
+    return true;
+  }
+  let isLegal = false;
+  let minusFirst = card.value - drawn[0].value;
+  let minusLast = card.value - drawn[drawn.length - 1].value;
+
+  if (
+    card.value === drawn[0].value &&
+    card.value === drawn[drawn.length - 1].value
+  ) {
+    isLegal = true;
+  } else if (
+    card.suit === drawn[0].suit &&
+    (minusFirst === 1 || minusFirst === -1)
+  ) {
+    isLegal = true;
+  } else if (
+    card.suit === drawn[0].suit &&
+    (minusLast === 1 || minusLast === -1)
+  ) {
+    isLegal = true;
+  }
+  return isLegal;
 }

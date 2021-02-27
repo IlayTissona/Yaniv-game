@@ -59,6 +59,9 @@ body {
 }
 
 #player1 {
+  position: fixed;
+  height: 100vh;
+  width: 15vw;
   left: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -70,25 +73,24 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 15vw;
-  height: 100vh;
-  position: fixed;
-}
-
-#player1 .card {
-  -webkit-transform: rotate(270deg);
-          transform: rotate(270deg);
-  width: 15vh;
 }
 
 #player1 .player-title {
   position: absolute;
   right: -80px;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+#player1 .card {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  width: 15vh;
 }
 
 #player1 .player-current-hand {
   position: absolute;
-  right: -10px;
+  right: -30px;
 }
 
 #player3 {
@@ -111,16 +113,30 @@ body {
 #player3 .player-title {
   position: absolute;
   left: -80px;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
 }
 
 #player3 .card {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+  width: 15vh;
 }
 
 #player3 .player-current-hand {
   position: absolute;
   left: -30px;
+}
+
+.player-input {
+  height: 90%;
+  width: 90%;
+  background-color: inherit;
+  font-size: 36px;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  border: none;
 }
 
 #table-deck {
@@ -131,6 +147,7 @@ body {
   position: fixed;
   top: 35vh;
   left: 30vw;
+  z-index: 2;
 }
 
 #table-pile {
@@ -157,5 +174,14 @@ body {
   top: 25vh;
   left: 25vw;
   background-color: limegreen;
+}
+
+#start-button {
+  height: 100%;
+  width: 100%;
+  background-color: greenyellow;
+  z-index: 50;
+  font-size: 200px;
+  line-height: 100%;
 }
 /*# sourceMappingURL=style.css.map */

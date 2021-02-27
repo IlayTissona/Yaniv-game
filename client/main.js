@@ -2,15 +2,17 @@ function newGame() {
   let inputs = [];
   for (let i = 0; i < 4; i++) {
     let playerDiv = document.getElementById(`player${i}`);
-    let playerInput = document.createElement("input");
-    playerInput.type = "text";
-    playerInput.placeholder = "Player's name:";
-    playerInput.id = `player${i}-input`;
+    let playerInput = document.createElement("textarea");
+    // playerInput.type = "text";
+    playerInput.placeholder = `Player's \n name:`;
+    playerInput.className = `player-input`;
     playerDiv.append(playerInput);
     inputs.push(playerInput);
   }
   let tableDiv = document.getElementById("table");
   let startBtn = document.createElement("button");
+  let tableDeck = document.getElementById("table-deck");
+  tableDeck.hidden = true;
   startBtn.id = "start-button";
   startBtn.innerText = "Start";
   tableDiv.append(startBtn);
@@ -31,6 +33,7 @@ function newGame() {
     }
     newRound(players);
     tableDiv.removeChild(startBtn);
+    tableDeck.hidden = false;
   });
 }
 
@@ -44,7 +47,7 @@ function newRound(players, starter = Math.floor(Math.random() * 4)) {
 
   for (player of players) {
     if (player.out) {
-      deck.concat(...player.deck);
+      deck.concat(player.deck);
       player.score = ":(";
     }
   }
@@ -58,6 +61,7 @@ function playTurn(players, turn, deck, tablePile) {
   const playerDiv = document.getElementById(player.index);
 
   playerDiv.style.color = "red";
+
   if (player.out) {
     turn = turn === 3 ? 0 : turn + 1;
     playTurn(players, turn, deck, tablePile);
@@ -118,7 +122,10 @@ function playTurn(players, turn, deck, tablePile) {
       tableDiv.addEventListener("click", function drawCardPick(event) {
         //chose which deck the player wishes to draw from
         let deckToDrawFrom;
-        if (event.target.id === "new-round-button") {
+        if (
+          event.target.id === "new-round-button" ||
+          cardsToPlace.length === 0
+        ) {
           return;
         }
         if (event.target.id === "table-deck") {
@@ -133,6 +140,7 @@ function playTurn(players, turn, deck, tablePile) {
           last = event.clientX < boundClient.left + boundClient.width / 2;
         }
         player.drawCard(deckToDrawFrom, last);
+
         //print updated game state
         printGameState(players, deck, cardsToPlace);
         tablePile.push(...cardsToPlace);
@@ -144,7 +152,7 @@ function playTurn(players, turn, deck, tablePile) {
         //if table deck has ended, shuffle with table pile and keep going
         if (deck.length === 1) {
           deck.push(...tablePile);
-          tablePile.push(deck.pop);
+          tablePile.push(deck.pop());
           deck.shuffle();
         }
         playTurn(players, turn, deck, tablePile);

@@ -187,7 +187,6 @@ function isLegalCard(card, drawn) {
 
 function printRoundEnd(players, yaniv, asaf) {
   for (i in players) {
-    console.log(Number(i));
     let playerDiv = document.getElementById(players[i].index);
     playerDiv.innerText = "";
     if (Number(i) === asaf) {

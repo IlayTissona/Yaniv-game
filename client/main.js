@@ -80,24 +80,29 @@ function playTurn(players, turn, deck, tablePile) {
 
     if (tableEventNotAdded) {
       tableDiv.addEventListener("click", function drawCardPick(event) {
+        //chose which deck the player wishes to draw from
         let deckToDrawFrom;
         if (event.target.id === "table-deck") {
           deckToDrawFrom = deck;
         } else if (event.target.parentNode.parentNode.id === "table-pile") {
           deckToDrawFrom = tablePile;
         } else return;
+        //in case its the table-pile, decide if he wants to take the first or last
         let last;
         if (deckToDrawFrom === tablePile) {
           let boundClient = event.target.parentNode.getBoundingClientRect();
           last = event.clientX < boundClient.left + boundClient.width / 2;
         }
         player.drawCard(deckToDrawFrom, last);
+        //print updated game state
         printGameState(players, deck, cardsToPlace);
         tablePile.push(...cardsToPlace);
         turn = turn === 3 ? 0 : turn + 1;
         playerDiv.removeEventListener("click", placeCard);
         tableDiv.removeEventListener("click", drawCardPick);
         playerDiv.style.color = "black";
+
+        //if table deck has ended, shuffle with table pile and keep going
         if (deck.length === 1) {
           deck.push(...tablePile);
           tablePile.push(deck.pop);
@@ -105,7 +110,7 @@ function playTurn(players, turn, deck, tablePile) {
         }
         playTurn(players, turn, deck, tablePile);
       });
-      tableEventNotAdded = false;
+      tableEventNotAdded = false; // makes sure drawing event listener happens only once.
     }
   });
 }
@@ -142,11 +147,42 @@ function roundEnd(players, yaniv) {
     if (player.score > 200) {
       players.splice(players.indexOf(player), 1);
     }
-
-    console.log(player);
   }
-  confirm("whenever you are ready to start again");
-  newRound(players, asaf !== false ? asaf : yaniv);
+  printRoundEnd(players, yaniv, asaf);
+}
+
+function printRoundEnd(players, yaniv, asaf) {
+  for (i in players) {
+    let playerDiv = document.getElementById(players[i].index);
+    if (i === asaf) {
+      let asafDiv = document.createElement("div");
+      asafDiv.id = "asaf-div";
+      asafDiv.innerText = "Congratulations, asaf!!";
+      playerDiv.append(asafDiv);
+    }
+    if (i === yaniv) {
+      let yanivDiv = document.createElement("div");
+      yanivDiv.id = "yaniv-div";
+      yanivDiv.innerText = "Congratulations, Yaniv!";
+      if (asaf !== false) {
+        yanivDiv.className = "yaniv-asaf";
+        yanivDiv.innerText = "Tough luck my friend, maybe next time";
+      }
+      playerDiv.append(yanivDiv);
+    }
+    let scoreDiv = document.createElement("div");
+    scoreDiv.className = "score-div";
+    scoreDiv.innerText = players[i].score;
+    playerDiv.append(scoreDiv);
+  }
+  let tableDiv = document.getElementById("table");
+  let newRoundBtn = document.createElement("button");
+  newRoundBtn.innerText = "Moving on to the next round!";
+  tableDiv.append(newRoundBtn);
+
+  newRoundBtn.addEventListener("click", () => {
+    newRound(players, asaf !== false ? asaf : yaniv);
+  });
 }
 
 window.addEventListener("DOMContentLoaded", newGame);

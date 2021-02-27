@@ -94,6 +94,7 @@ function deal(players, deck) {
 function printGameState(players, tableDeck, tablePile) {
   for (let player of players) {
     let playerDiv = document.getElementById(player.index);
+    playerDiv.style.color = "black";
     playerDiv.innerHTML = "";
     let playerTitle = document.createElement("h2");
     playerTitle.className = "player-title";

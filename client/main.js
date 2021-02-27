@@ -17,6 +17,13 @@ function newRound(players, starter = Math.floor(Math.random() * 4)) {
   let tablePile = [];
   tablePile.push(deck.pop());
 
+  for (player of players) {
+    if (player.out) {
+      deck.concat(...player.deck);
+      player.score = ":(";
+    }
+  }
+
   printGameState(players, deck, tablePile);
   playTurn(players, turn, deck, tablePile);
 }
@@ -26,6 +33,10 @@ function playTurn(players, turn, deck, tablePile) {
   const playerDiv = document.getElementById(player.index);
 
   playerDiv.style.color = "red";
+  if (player.out) {
+    turn = turn === 3 ? 0 : turn + 1;
+    playTurn(players, turn, deck, tablePile);
+  }
 
   if (player.calcHandPoints() <= 7) {
     let yanivButton = document.createElement("button");
@@ -126,8 +137,6 @@ function roundEnd(players, yaniv) {
       asaf = players.indexOf(player);
     }
   }
-  console.log(`asaf ${asaf}`);
-  console.log(`yaniv ${yaniv}`);
   for (const player of players) {
     if (player === players[yaniv]) {
       player.score =
@@ -145,7 +154,7 @@ function roundEnd(players, yaniv) {
     }
 
     if (player.score > 200) {
-      players.splice(players.indexOf(player), 1);
+      player.out = true;
     }
   }
   printRoundEnd(players, yaniv, asaf);
@@ -153,14 +162,16 @@ function roundEnd(players, yaniv) {
 
 function printRoundEnd(players, yaniv, asaf) {
   for (i in players) {
+    console.log(Number(i));
     let playerDiv = document.getElementById(players[i].index);
-    if (i === asaf) {
+    playerDiv.innerText = "";
+    if (Number(i) === asaf) {
       let asafDiv = document.createElement("div");
       asafDiv.id = "asaf-div";
       asafDiv.innerText = "Congratulations, asaf!!";
       playerDiv.append(asafDiv);
     }
-    if (i === yaniv) {
+    if (Number(i) === yaniv) {
       let yanivDiv = document.createElement("div");
       yanivDiv.id = "yaniv-div";
       yanivDiv.innerText = "Congratulations, Yaniv!";
@@ -176,12 +187,18 @@ function printRoundEnd(players, yaniv, asaf) {
     playerDiv.append(scoreDiv);
   }
   let tableDiv = document.getElementById("table");
+
+  for (let pile of tableDiv.childNodes) {
+    pile.innerText = "";
+  }
+
   let newRoundBtn = document.createElement("button");
   newRoundBtn.innerText = "Moving on to the next round!";
   tableDiv.append(newRoundBtn);
 
   newRoundBtn.addEventListener("click", () => {
     newRound(players, asaf !== false ? asaf : yaniv);
+    tableDiv.removeChild(newRoundBtn);
   });
 }
 

@@ -184,3 +184,46 @@ function isLegalCard(card, drawn) {
   }
   return isLegal;
 }
+
+function printRoundEnd(players, yaniv, asaf) {
+  for (i in players) {
+    console.log(Number(i));
+    let playerDiv = document.getElementById(players[i].index);
+    playerDiv.innerText = "";
+    if (Number(i) === asaf) {
+      let asafDiv = document.createElement("div");
+      asafDiv.id = "asaf-div";
+      asafDiv.innerText = "Congratulations, asaf!!";
+      playerDiv.append(asafDiv);
+    }
+    if (Number(i) === yaniv) {
+      let yanivDiv = document.createElement("div");
+      yanivDiv.id = "yaniv-div";
+      yanivDiv.innerText = "Congratulations, Yaniv!";
+      if (asaf !== false) {
+        yanivDiv.className = "yaniv-asaf";
+        yanivDiv.innerText = "Tough luck my friend, maybe next time";
+      }
+      playerDiv.append(yanivDiv);
+    }
+    let scoreDiv = document.createElement("div");
+    scoreDiv.className = "score-div";
+    scoreDiv.innerText = players[i].score;
+    playerDiv.append(scoreDiv);
+  }
+  let tableDiv = document.getElementById("table");
+
+  for (let pile of tableDiv.childNodes) {
+    pile.innerText = "";
+  }
+
+  let newRoundBtn = document.createElement("button");
+  newRoundBtn.id = "new-round-button";
+  newRoundBtn.innerText = "Moving on to the next round!";
+  tableDiv.append(newRoundBtn);
+
+  newRoundBtn.addEventListener("click", () => {
+    newRound(players, asaf !== false ? asaf : yaniv);
+    tableDiv.removeChild(newRoundBtn);
+  });
+}

@@ -1,12 +1,37 @@
 function newGame() {
-  let players = [
-    new Player("ilay", 0),
-    new Player("zohar", 1),
-    new Player("tomer", 2),
-    new Player("yair", 3),
-  ];
-
-  newRound(players);
+  let inputs = [];
+  for (let i = 0; i < 4; i++) {
+    let playerDiv = document.getElementById(`player${i}`);
+    let playerInput = document.createElement("input");
+    playerInput.type = "text";
+    playerInput.placeholder = "Player's name:";
+    playerInput.id = `player${i}-input`;
+    playerDiv.append(playerInput);
+    inputs.push(playerInput);
+  }
+  let tableDiv = document.getElementById("table");
+  let startBtn = document.createElement("button");
+  startBtn.id = "start-button";
+  startBtn.innerText = "Start";
+  tableDiv.append(startBtn);
+  startBtn.addEventListener("click", () => {
+    let exists = {};
+    let players = [];
+    for (let input of inputs) {
+      if (!input.value || input.value === " ") {
+        alert("all players must have names!");
+        return;
+      }
+      if (exists[input.value]) {
+        alert("Can't have 2 players with the same name");
+        return;
+      }
+      exists[input.value] = true;
+      players.push(new Player(input.value, inputs.indexOf(input)));
+    }
+    newRound(players);
+    tableDiv.removeChild(startBtn);
+  });
 }
 
 function newRound(players, starter = Math.floor(Math.random() * 4)) {
@@ -161,49 +186,6 @@ function roundEnd(players, yaniv) {
     }
   }
   printRoundEnd(players, yaniv, asaf);
-}
-
-function printRoundEnd(players, yaniv, asaf) {
-  for (i in players) {
-    console.log(Number(i));
-    let playerDiv = document.getElementById(players[i].index);
-    playerDiv.innerText = "";
-    if (Number(i) === asaf) {
-      let asafDiv = document.createElement("div");
-      asafDiv.id = "asaf-div";
-      asafDiv.innerText = "Congratulations, asaf!!";
-      playerDiv.append(asafDiv);
-    }
-    if (Number(i) === yaniv) {
-      let yanivDiv = document.createElement("div");
-      yanivDiv.id = "yaniv-div";
-      yanivDiv.innerText = "Congratulations, Yaniv!";
-      if (asaf !== false) {
-        yanivDiv.className = "yaniv-asaf";
-        yanivDiv.innerText = "Tough luck my friend, maybe next time";
-      }
-      playerDiv.append(yanivDiv);
-    }
-    let scoreDiv = document.createElement("div");
-    scoreDiv.className = "score-div";
-    scoreDiv.innerText = players[i].score;
-    playerDiv.append(scoreDiv);
-  }
-  let tableDiv = document.getElementById("table");
-
-  for (let pile of tableDiv.childNodes) {
-    pile.innerText = "";
-  }
-
-  let newRoundBtn = document.createElement("button");
-  newRoundBtn.id = "new-round-button";
-  newRoundBtn.innerText = "Moving on to the next round!";
-  tableDiv.append(newRoundBtn);
-
-  newRoundBtn.addEventListener("click", () => {
-    newRound(players, asaf !== false ? asaf : yaniv);
-    tableDiv.removeChild(newRoundBtn);
-  });
 }
 
 window.addEventListener("DOMContentLoaded", newGame);

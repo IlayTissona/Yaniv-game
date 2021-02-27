@@ -55,6 +55,7 @@ body {
   .card {
     transform: rotate(90deg);
     width: 15vh;
+    margin: auto;
   }
   .player-current-hand {
     position: absolute;
@@ -78,6 +79,7 @@ body {
   .card {
     transform: rotate(270deg);
     width: 15vh;
+    margin: auto;
   }
   .player-current-hand {
     position: absolute;
@@ -104,6 +106,10 @@ body {
   top: 35vh;
   left: 30vw;
   z-index: 2;
+  color: wheat;
+  text-align: center;
+  font-size: 28px;
+  line-height: 50px;
 }
 #table-pile {
   position: fixed;

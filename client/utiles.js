@@ -188,7 +188,7 @@ function isLegalCard(card, drawn) {
 function printRoundEnd(players, yaniv, asaf) {
   for (i in players) {
     let playerDiv = document.getElementById(players[i].index);
-    playerDiv.innerText = "";
+    playerDiv.innerText = players[i].name;
     if (Number(i) === asaf) {
       let asafDiv = document.createElement("div");
       asafDiv.id = "asaf-div";
@@ -215,13 +215,15 @@ function printRoundEnd(players, yaniv, asaf) {
   for (let pile of tableDiv.childNodes) {
     pile.innerText = "";
   }
-
+  let tableDeckDiv = document.getElementById("table-deck");
+  tableDeckDiv.hidden = true;
   let newRoundBtn = document.createElement("button");
   newRoundBtn.id = "new-round-button";
   newRoundBtn.innerText = "Moving on to the next round!";
   tableDiv.append(newRoundBtn);
 
   newRoundBtn.addEventListener("click", () => {
+    tableDeckDiv.hidden = false;
     newRound(players, asaf !== false ? asaf : yaniv);
     tableDiv.removeChild(newRoundBtn);
   });

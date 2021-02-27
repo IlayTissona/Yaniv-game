@@ -39,7 +39,6 @@ function newGame() {
 
 function newRound(players, starter = Math.floor(Math.random() * 4)) {
   let deck = new Deck();
-  let turn = starter;
   deck.shuffle();
   deal(players, deck);
   let tablePile = [];
@@ -53,7 +52,7 @@ function newRound(players, starter = Math.floor(Math.random() * 4)) {
   }
 
   printGameState(players, deck, tablePile);
-  playTurn(players, turn, deck, tablePile);
+  playTurn(players, starter, deck, tablePile);
 }
 
 function playTurn(players, turn, deck, tablePile) {

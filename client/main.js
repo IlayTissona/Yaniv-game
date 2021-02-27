@@ -22,10 +22,11 @@ function newRound(players, starter = Math.floor(Math.random() * 4)) {
 }
 
 function playTurn(players, turn, deck, tablePile) {
-  // roundEnd(players, turn);
   const player = players[turn];
   const playerDiv = document.getElementById(player.index);
+
   playerDiv.style.color = "red";
+
   if (player.calcHandPoints() <= 7) {
     let yanivButton = document.createElement("button");
     playerDiv.append(yanivButton);
@@ -34,8 +35,10 @@ function playTurn(players, turn, deck, tablePile) {
       roundEnd(players, turn);
     });
   }
+
   let tableEventNotAdded = true;
   let cardsToPlace = [];
+
   playerDiv.addEventListener("click", function placeCard(event) {
     if (
       event.target.innerText === "Yaniv!" ||
@@ -43,21 +46,36 @@ function playTurn(players, turn, deck, tablePile) {
     ) {
       return;
     }
-    const cardDiv = event.target.parentNode;
-    for (let card of player.deck) {
-      if (
-        cardDiv.whichCard === `${card.value} ${card.suit}` &&
-        !cardsToPlace.includes(card) &&
-        isLegalCard(card, cardsToPlace)
-      ) {
-        cardDiv.style.filter = "brightness(50%)";
-        cardsToPlace.push(card);
-        player.deck.splice(
-          player.deck.indexOf(cardsToPlace[cardsToPlace.length - 1]),
-          1
-        );
+
+    const cardDiv = event.target.parentNode; //because in each card div there is an image
+    //if/else toggle pick/unpick card
+    if (cardDiv.picked) {
+      for (let card of cardsToPlace) {
+        if (cardDiv.whichCard === `${card.value} ${card.suit}`) {
+          cardDiv.style.filter = "brightness(100%)";
+          cardDiv.picked = false;
+          cardsToPlace.splice(cardsToPlace.indexOf(card), 1);
+          player.deck.push(card);
+        }
+      }
+    } else {
+      for (let card of player.deck) {
+        if (
+          cardDiv.whichCard === `${card.value} ${card.suit}` &&
+          !cardsToPlace.includes(card) &&
+          isLegalCard(card, cardsToPlace)
+        ) {
+          cardDiv.style.filter = "brightness(50%)";
+          cardDiv.picked = true;
+          cardsToPlace.push(card);
+          player.deck.splice(
+            player.deck.indexOf(cardsToPlace[cardsToPlace.length - 1]),
+            1
+          );
+        }
       }
     }
+
     const tableDiv = document.getElementById("table");
 
     if (tableEventNotAdded) {

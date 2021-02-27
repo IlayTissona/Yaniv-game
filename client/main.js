@@ -93,6 +93,9 @@ function playTurn(players, turn, deck, tablePile) {
       tableDiv.addEventListener("click", function drawCardPick(event) {
         //chose which deck the player wishes to draw from
         let deckToDrawFrom;
+        if (event.target.id === "new-round-button") {
+          return;
+        }
         if (event.target.id === "table-deck") {
           deckToDrawFrom = deck;
         } else if (event.target.parentNode.parentNode.id === "table-pile") {
@@ -101,7 +104,7 @@ function playTurn(players, turn, deck, tablePile) {
         //in case its the table-pile, decide if he wants to take the first or last
         let last;
         if (deckToDrawFrom === tablePile) {
-          let boundClient = event.target.parentNode.getBoundingClientRect();
+          let boundClient = event.target.parentNode.parentNode.getBoundingClientRect();
           last = event.clientX < boundClient.left + boundClient.width / 2;
         }
         player.drawCard(deckToDrawFrom, last);
@@ -193,6 +196,7 @@ function printRoundEnd(players, yaniv, asaf) {
   }
 
   let newRoundBtn = document.createElement("button");
+  newRoundBtn.id = "new-round-button";
   newRoundBtn.innerText = "Moving on to the next round!";
   tableDiv.append(newRoundBtn);
 

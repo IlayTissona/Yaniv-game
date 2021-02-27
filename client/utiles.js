@@ -27,14 +27,14 @@ class Player {
     return points;
   }
 
-  drawCard(tableDeck, last = false) {
+  drawCard(deckToDrawFrom, last = false) {
     if (last) {
       let tablePileDiv = document.getElementById("table-pile");
       let cardsInPile = tablePileDiv.childNodes.length;
-      this.deck.push(tableDeck[tableDeck.length - cardsInPile]);
-      tableDeck.splice(tableDeck.length - cardsInPile, 1);
+      this.deck.push(deckToDrawFrom[deckToDrawFrom.length - cardsInPile]);
+      deckToDrawFrom.splice(deckToDrawFrom.length - cardsInPile, 1);
     } else {
-      this.deck.push(tableDeck.pop());
+      this.deck.push(deckToDrawFrom.pop());
     }
   }
 }
